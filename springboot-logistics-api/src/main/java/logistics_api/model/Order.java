@@ -1,19 +1,19 @@
 package logistics_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "orders_table")
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     private int quantity;
     private double totalPrice;
