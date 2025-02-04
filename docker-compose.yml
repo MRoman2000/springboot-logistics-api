@@ -11,6 +11,11 @@ services:
       MYSQL_PASSWORD: logistics_password
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
 
   springboot-app:
     build: springboot-logistics-api

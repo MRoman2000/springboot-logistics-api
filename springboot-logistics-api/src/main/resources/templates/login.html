@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* General styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Login form container */
+    .login-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Input styles */
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #4CAF50;
+    }
+
+    /* Button styles */
+    .btn {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 14px;
+        font-size: 1.2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
+
+    .btn:focus {
+        outline: none;
+    }
+
+    /* Error message */
+    .error-message {
+        color: #ff0000;
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    /* Footer */
+    footer {
+        position: absolute;
+        bottom: 10px;
+        color: #888;
+        font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Login</h2>
+
+  <!-- Login Form -->
+  <form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" class="btn">Login</button>
+  </form>
+
+  <!-- Error message (if any) -->
+  <div class="error-message" id="error-message">
+    <!-- Error message will be shown here if login fails -->
+  </div>
+</div>
+
+<footer>
+  <p>Created with 💻 by Your Name</p>
+</footer>
+
+</body>
+</html>
