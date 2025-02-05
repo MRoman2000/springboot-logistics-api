@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
   <title>Home</title>
 </head>
 <body>
-<h2>Welcome to the Home Page!</h2>
-<p>This is where you would land after logging in (although no login is required right now).</p>
-<a href="/">
-  <button>Go to Main Page</button>
-</a>
+
+<div id="productContainer">
+  <!-- Aquí se mostrarán los productos -->
+</div>
+
+<script>
+  const token = localStorage.getItem('jwtToken');
+
+  if (token) {
+    fetchProducts(token);
+  } else {
+    alert('Por favor, inicie sesión primero.');
+    window.location.href = '/login';  // Redirige al login si no hay token
+  }
+
+ async function fetchProducts(token) {
+    try {
+        const response = await fetch('http://localhost:8080/product', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, // El token debe ir aquí
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('No autorizado');
+        }
+
+        const data = await response.json();
+        displayProducts(data);
+    } catch (error) {
+        alert('Error al obtener productos: ' + error.message);
+    }
+}
+
+
+  function displayProducts(products) {
+    const productContainer = document.getElementById('productContainer');
+    productContainer.innerHTML = '';  // Limpiar el contenedor
+
+    if (products.length === 0) {
+      productContainer.innerHTML = '<p>No hay productos disponibles.</p>';
+    } else {
+      const ul = document.createElement('ul');
+      products.forEach(product => {
+        const li = document.createElement('li');
+        li.textContent = `Producto: ${product.name}, Precio: $${product.price}`;
+        ul.appendChild(li);
+      });
+      productContainer.appendChild(ul);
+    }
+  }
+</script>
+
 </body>
 </html>

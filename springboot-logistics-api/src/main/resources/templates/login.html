@@ -91,22 +91,61 @@
 <div class="login-container">
   <h2>Login</h2>
 
-  <!-- Login Form -->
-  <form action="/login" method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
+  <!-- Formulario de Login con Thymeleaf -->
+  <form id="loginForm">
+    <input type="username" id="username" name="username" placeholder="Username" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
     <button type="submit" class="btn">Login</button>
   </form>
 
-  <!-- Error message (if any) -->
-  <div class="error-message" id="error-message">
-    <!-- Error message will be shown here if login fails -->
+  <!-- Mostrar mensaje de error si el login falla -->
+  <div class="error-message" id="error-message" style="display:none;">
+    <!-- Mensaje de error -->
   </div>
+
 </div>
 
 <footer>
   <p>Created with 💻 by Your Name</p>
 </footer>
+
+<script>
+  // Al enviar el formulario
+  document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Enviar solicitud de login al backend
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!response.ok) {
+        throw new Error('Credenciales incorrectas');
+      }
+
+      const data = await response.json();
+      const token = data.token;
+
+      // Guardar el token en el localStorage (o sessionStorage)
+      localStorage.setItem('jwtToken', token);
+
+      // Redirigir al usuario a la página de inicio
+      window.location.href = '/home';  // Redirige a la página de inicio, ajusta la ruta según sea necesario
+    } catch (error) {
+      // Mostrar mensaje de error
+      document.getElementById('error-message').textContent = error.message;
+      document.getElementById('error-message').style.display = 'block';
+    }
+  });
+</script>
 
 </body>
 </html>
